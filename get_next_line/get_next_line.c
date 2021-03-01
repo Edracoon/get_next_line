@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 16:06:55 by marvin            #+#    #+#             */
-/*   Updated: 2021/02/08 11:55:08 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/03/01 16:32:38 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,3 +121,33 @@ int				get_next_line(int fd, char **line)
 	str = temp;
 	return (ret == 0 ? 0 * ft_strdel(&str) : 1);
 }
+/*
+int			main(int argc, char **argv)
+{
+	char	*line;
+	int		fd;
+	int		code;
+	int		len;
+	int		i;
+
+	i = 1;
+	printf("BUFF_SIZE = %d\n", BUFFER_SIZE);
+	printf("___Premier FD___ \n\n");
+	while (i < argc)
+	{
+		if ((fd = open(argv[i], O_RDONLY)) == -1)
+			write(1, "Erreur, ne peut pas ouvrir le fichier", 25);
+		while ((code = get_next_line(fd, &line)) > 0)
+		{
+			len = ft_strlen(line);
+			printf("%d - %d - |%s|\n", code, len, line);
+			free(line);
+		}
+		i++;
+		if (i < argc)
+			printf("\n___Changement de FD___ \n\n");
+	}
+	printf("LAST %d - |%s|\n", code, line);
+	return (0);
+}
+*/
