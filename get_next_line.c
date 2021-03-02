@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 16:06:55 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/02 17:11:08 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/03/02 17:15:03 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,18 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 
 int				get_next_line(int fd, char **line)
 {
-	ssize_t		ret;															/* return de read    ssize_t = pour aller dans les negatifs (-1 / 0 / 1) */
-	char		buff[BUFFER_SIZE + (ret = 1)];									/* buffer / ligne qu'on lis on va stocker dedans ce qu'on lis puis on rentrera buf dans str qui est static */
-	static char	*str = NULL; 													/* destination de ce que l'on va lire. (static * = stock l'adresse memoire) pour garder en memoir ou on en est */
+	ssize_t		ret;                                                            /* return de read    ssize_t = pour aller dans les negatifs (-1 / 0 / 1) */
+	char		buff[BUFFER_SIZE + (ret = 1)];                                  /* buffer / ligne qu'on lis on va stocker dedans ce qu'on lis puis on rentrera buf dans str qui est static */
+	static char	*str = NULL;                                                    /* destination de ce que l'on va lire. (static * = stock l'adresse memoire) pour garder en memoir ou on en est */
 	char		*temp;
 
-	if (fd < 0 || fd >= 256 || !line || BUFFER_SIZE <= 0)						/* gestion d'erreur */
+	if (fd < 0 || fd >= 256 || !line || BUFFER_SIZE <= 0)                       /* gestion d'erreur */
 		return (-1);
-	str == NULL ? str = ft_memalloc(1 * sizeof(char)) : NULL;					/* verification de la static pour savoir si c'est le premier appel de gnl ou non, on alloue 1 bit pour le '\0' */
-	while (!ft_strchr(str, '\n') && (ret = read(fd, buff, BUFFER_SIZE)) > 0)	/* Tant que l'on a pas de '\n' et que le read() lis (ret = le return de read, le nombre de bit lus) */
+	str == NULL ? str = ft_memalloc(1 * sizeof(char)) : NULL;                   /* verification de la static pour savoir si c'est le premier appel de gnl ou non, on alloue 1 bit pour le '\0' */
+	while (!ft_strchr(str, '\n') && (ret = read(fd, buff, BUFFER_SIZE)) > 0)    /* Tant que l'on a pas de '\n' et que le read() lis (ret = le return de read, le nombre de bit lus) */
 	{
-		buff[ret] = '\0';														/* on met le '\0' a la fin de la string buff (notre ligne lue en fonction du buffer_size) pour permettre le ft_strjoin */
-		temp = ft_strjoin(str, buff);											/* strjoin de la static str avec la ligne lue, qu'on stock dans temp le temps de free l'ancienne adresse de str */
+		buff[ret] = '\0';                                                       /* on met le '\0' a la fin de la string buff (notre ligne lue en fonction du buffer_size) pour permettre le ft_strjoin */
+		temp = ft_strjoin(str, buff);                                           /* strjoin de la static str avec la ligne lue, qu'on stock dans temp le temps de free l'ancienne adresse de str */
 		ft_strfree(&str);														/* on free l'adresse de str pour ensuite lui reassigner temp pour ne pas avoir de leaks et de superposition de string */
 		str = temp;																/* assignation de str avec le nouvel strjoin */
 	}																			/* on check le ret a la sortie de la boucle, on sort si ret <= 0 ou si l'on a trouvé le '\n' */
