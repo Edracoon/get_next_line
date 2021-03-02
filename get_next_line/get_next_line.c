@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 16:06:55 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/01 16:32:38 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/03/02 14:31:21 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ int				get_next_line(int fd, char **line)
 	static char	*str = NULL; /* destination de ce que l'on va lire. (static * = stock l'adresse memoire) pour garder en memoir ou on en est */
 	char		*temp;
 
-	if (fd < 0 || fd >= 256 || !line || BUFFER_SIZE <= 0)  /* gestion d'erreur */
+	if (fd < 0 || fd >= 256 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	str == NULL ? str = ft_strnew(0) : NULL; /* bzero */
+	str == NULL ? str = ft_memalloc(1 * sizeof(char)) : NULL;
 	while (!ft_strchr(str, '\n') && (ret = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
 		temp = ft_strjoin(str, buff);
-		ft_strdel(&str);
+		ft_strfree(&str);
 		str = temp;
 	}
 	if (ret == 0)
@@ -117,9 +117,9 @@ int				get_next_line(int fd, char **line)
 	else
 		return (-1);
 	temp = ft_strdup(str + (ft_strlen(*line) + ((ret > 0) ? +1 : +0)));
-	ft_strdel(&str);
+	ft_strfree(&str);
 	str = temp;
-	return (ret == 0 ? 0 * ft_strdel(&str) : 1);
+	return (ret == 0 ? 0 * ft_strfree(&str) : 1);
 }
 /*
 int			main(int argc, char **argv)
@@ -131,6 +131,7 @@ int			main(int argc, char **argv)
 	int		i;
 
 	i = 1;
+	(void)argc;
 	printf("BUFF_SIZE = %d\n", BUFFER_SIZE);
 	printf("___Premier FD___ \n\n");
 	while (i < argc)
@@ -149,5 +150,4 @@ int			main(int argc, char **argv)
 	}
 	printf("LAST %d - |%s|\n", code, line);
 	return (0);
-}
-*/
+}*/
