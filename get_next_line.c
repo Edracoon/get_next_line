@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 16:06:55 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/02 17:21:25 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/03/02 17:21:52 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int				get_next_line(int fd, char **line)
 	ft_strfree(&str);                                                             /* on free une derniere fois l'adresse de str */
 	str = temp;
 	return (ret == 0 ? 0 * ft_strfree(&str) : 1);                                 /* valeur de return, on reverifie le ret de read, si on est a l'EOF, on free &str tout en renvoyant 0 */
-}                                                                                    /* sinon on return 1 == une ligne a été lu */
+}                                                                                     /* sinon on return 1 == une ligne a été lu */
 
 /*
 ** Main Tester :
