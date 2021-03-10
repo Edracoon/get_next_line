@@ -2,7 +2,7 @@
 
 -------------------
 
-gcc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=42 && ./a.out test.txt
+gcc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=42 && ./a.out texte.txt
 
 Status : Finished
 
