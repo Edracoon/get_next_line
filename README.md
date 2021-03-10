@@ -2,6 +2,8 @@
 
 -------------------
 
+gcc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=42 && ./a.out test.txt
+
 Status : Finished
 
 115% moulinette
