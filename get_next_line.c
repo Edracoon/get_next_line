@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/*  */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 16:06:55 by marvin            #+#    #+#             */
-/*   Updated: 2021/03/02 17:23:39 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/03/03 11:10:33 by epfennig         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/*  */
 
 #include "get_next_line.h"
 
@@ -66,6 +66,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 
 	i = 0;
 	j = 0;
+	printf("%i, %zi", start, len);
 	if (!(dest = (char *)malloc(sizeof(char) * len + 1)))
 		return (NULL);
 	while (s[i] != '\0')
@@ -113,44 +114,43 @@ int				get_next_line(int fd, char **line)
 	if (ret == 0)                                                                 /* si ret = 0 , cela veut dire que il n'y a plus rien a lire car ret = 0*/
 		*line = ft_strdup(str);                                               /* on copy + malloc dans *line qui est notre ligne finale de retour, on fait strdup car on a l'EOF donc on a la len qu'il nous faut*/
 	else if (ret > 0)                                                             /* si ret > 0 cela veut dire qu'on n'est pas arrivé a l'EOF donc on fait un substr*/
-		*line = ft_substr(str, 0, (ft_strchr(str, '\n') - str));              /* strchr - str c'est adresse d'un pointeur - l'adresse de l'autre et ca fait un int : on part de start = 0 et len = la position du '\n' */
-	else
+		*line = ft_substr(str, 0, (ft_strchr(str, '\n') - str));             /* strchr - str c'est adresse d'un pointeur - l'adresse de l'autre et ca fait un int : on part de start = 0 et len = la position du '\n' */
+	else                                                                      /* on calcule avec strchr - str = l'adresse du \n dans str */
 		return (-1);                                                          /* else on trouve une erreur dans le ret (ret < 0) */
-	temp = ft_strdup(str + (ft_strlen(*line) + ((ret > 0) ? +1 : +0)));           /* partie on l'on stoque le reste pour la suite di programme */
+	temp = ft_strdup(str + (ft_strlen(*line) + ((ret > 0) ? +1 : +0)));           /* partie on l'on stoque le reste pour la suite du programme */
 	ft_strfree(&str);                                                             /* on free une derniere fois l'adresse de str */
 	str = temp;
 	return (ret == 0 ? 0 * ft_strfree(&str) : 1);                                 /* valeur de return, on reverifie le ret de read, si on est a l'EOF, on free &str tout en renvoyant 0 */
-}                                                                                     /* sinon on return 1 == une ligne a été lu */
+}                                                                                  /* sinon on return 1 == une ligne a été lu */
 
 /*
-** Main Tester :
-** int			main(int argc, char **argv)
-** {
-**		char	*line;
-**		int		fd;
-**		int		code;
-**		int		len;
-**		int		i;
+**int			main(int argc, char **argv)
+**{
+**	char	*line;
+**	int		fd;
+**	int		code;
+**	int		len;
+**	int		i;
 **
-**		i = 1;
-**		(void)argc;
-**		printf("BUFF_SIZE = %d\n", BUFFER_SIZE);
-**		printf("___Premier FD___ \n\n");
-**		while (i < argc)
+**	i = 1;
+**	(void)argc;
+**	printf("BUFF_SIZE = %d\n", BUFFER_SIZE);
+**	printf("___Premier FD___ \n\n");
+**	while (i < argc)
+**	{
+**		if ((fd = open(argv[i], O_RDONLY)) == -1)
+**			write(1, "Erreur, ne peut pas ouvrir le fichier", 25);
+**		while ((code = get_next_line(fd, &line)) > 0)
 **		{
-**			if ((fd = open(argv[i], O_RDONLY)) == -1)
-**				write(1, "Erreur, ne peut pas ouvrir le fichier", 25);
-**			while ((code = get_next_line(fd, &line)) > 0)
-**			{
-**				len = ft_strlen(line);
-**				printf("%d - %d - |%s|\n", code, len, line);
-**				free(line);
-**			}
-**			i++;
-**			if (i < argc)
-**				printf("\n___Changement de FD___ \n\n");
+**			len = ft_strlen(line);
+**			printf("%d - %d - |%s|\n", code, len, line);
+**			free(line);
 **		}
-**		printf("LAST %d - |%s|\n", code, line);
-**		return (0);
-** }
+**		i++;
+**		if (i < argc)
+**			printf("\n___Changement de FD___ \n\n");
+**	}
+**	printf("LAST %d - |%s|\n", code, line);
+**	return (0);
+**}
 */
